@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试小傻mao</title>
+    <link rel="stylesheet" type="text/less" href="./index.less">
+    <link rel="icon" href="icon.png">
+    　　<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            color: #e1e1e1;
+            background: #000;
+            text-align: center;
+
+        }
+
+        header span {
+            font-size: 18px;
+            line-height: 40px;
+        }
+
+        header span.light {
+            color: rgb(255, 0, 0);
+        }
+
+        .contant {
+            display: flex;
+            height: calc(100vh - 40px);
+        }
+
+        .contant .cont-lef,
+        .contant .cont-rig {
+            display: flex;
+            padding: 0 10px;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 100%;
+        }
+
+        .contant .cont-mid {
+            position: relative;
+            flex: 1;
+            display: inline-block;
+            height: 100%;
+            box-sizing: border-box;
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
+        }
+
+        .contant .cont-lef>div,
+        .contant .cont-rig>div {
+            height: 11%;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+
+        .every-person.active {
+            background-color: #ccc;
+        }
+
+        img {
+            display: inline-block;
+            height: 100%;
+        }
+
+        .boatDom {
+            position: absolute;
+            top: 38%;
+            left: 0;
+            border: none;
+            width: 46%;
+            /* animation: toRig 1s forwards; */
+        }
+
+        .person {
+            position: absolute;
+            top: 38%;
+            left: 0;
+            width: 120px;
+            text-align: center;
+            z-index: 1000;
+            /* animation: toRigCont 1s forwards; */
+        }
+
+        .person .every {
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            width: 40px;
+            height: 24px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin: 0 4px;
+            line-height: 24px;
+            background-image: url('./img/father.png');
+        }
+
+        .boat {
+            width: 100%;
+        }
+
+        .introduce {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            color: #666666;
+            padding: 10px 6px 10px 10px;
+            box-sizing: border-box;
+        }
+
+        .introduce p {
+            text-align: center;
+        }
+
+        .contant .menu {
+            text-align: center;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 4px 10px;
+            margin: 20px;
+        }
+
+        @keyframes toRig {
+            0% {
+                left: 0px;
+            }
+
+            75% {
+                left: 55%;
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                left: 55%;
+                transform: rotateY(180deg);
+            }
+        }
+
+        @keyframes toLef {
+            0% {
+                left: 55%;
+                transform: rotateY(180deg);
+            }
+
+            80% {
+                left: 0%;
+                transform: rotateY(180deg);
+            }
+
+            100% {
+                left: 0%;
+                transform: rotateY(0deg);
+
+            }
+        }
+
+        @keyframes toRigCont {
+            0% {
+                left: 0px;
+            }
+
+            75% {
+                left: 55%;
+            }
+
+            100% {
+                left: 55%;
+            }
+        }
+
+        @keyframes toLefCont {
+            0% {
+                left: 55%;
+            }
+
+            80% {
+                left: 0%;
+            }
+
+            100% {
+                left: 0%;
+            }
+        }
+
+        .cont-rig .every-person {
+            visibility: hidden
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span class="light">游戏规则</span><span>:看底下要求</span>
+    </header>
+    <div class="contant">
+        <div class="cont-lef">
+            <div class="every-person">
+                <img src="./img/mather.png" alt="">
+            </div>
+            <div class="every-person">
+                <img src="./img/sister.png" alt="">
+            </div>
+            <div class="every-person">
+                <img src="./img/sister.png" alt="">
+            </div>
+            <div class="every-person">
+                <img src="./img/father.png" alt="">
+            </div>
+            <div class="every-person">
+                <img src="./img/son.png" alt="">
+            </div>
+            <div class="every-person">
+                <img src="./img/son.png" alt="">
+            </div>
+            <div class="every-person">
+                <img src="./img/police.png" alt="">
+            </div>
+            <div class="every-person">
+                <img src="./img/bandit.png" alt="">
+            </div>
+        </div>
+        <div class="cont-mid">
+            <div class="person">
+                <!-- <div class="every">爸</div>
+                <div class="every">妈</div> -->
+            </div>
+            <div class="boatDom">
+
+                <img class="boat" src="./img/boat.png" alt="">
+            </div>
+            <div class="menu">
+                <button class="move">移动</button>
+                <button class="refresh">重玩</button>
+            </div>
+            <div class="introduce">
+                <p>游戏规则</p>
+                1.无论大人、小孩，每次最多只能承载两人。2.只有爸爸、妈妈、警察可以驾船。
+                3.妈妈看到爸爸离开儿子打儿子。4.爸爸看到妈妈离开女儿打女儿。 5.土匪离开警察会伤害家人。6.先选择人物，然后点击"移动"按钮。7.移动过程中若出现提示，说明违反上述规则。
+            </div>
+        </div>
+        <div class="cont-rig">
+            <div class="every-person hide">
+                <img src="./img/mather.png" alt="">
+            </div>
+            <div class="every-person hide">
+                <img src="./img/sister.png" alt="">
+            </div>
+            <div class="every-person hide">
+                <img src="./img/sister.png" alt="">
+            </div>
+            <div class="every-person hide">
+                <img src="./img/father.png" alt="">
+            </div>
+            <div class="every-person hide">
+                <img src="./img/son.png" alt="">
+            </div>
+            <div class="every-person hide">
+                <img src="./img/son.png" alt="">
+            </div>
+            <div class="every-person hide">
+                <img src="./img/police.png" alt="">
+            </div>
+            <div class="every-person hide">
+                <img src="./img/bandit.png" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        var lock = false;
+        var beforePlace = ''
+        var nowPlace = 'cont-lef'
+        var boatArr = []
+        var leftArr = [0, 1, 2, 3, 4, 5, 6, 7];
+        var rigArr = [];
+        $('.move').click(function () {
+            if (checkMove()) {
+                return
+            }
+            if (lock) {
+                return
+            }
+            lock = true;
+            setTimeout(function () {
+                lock = false;
+            }, 520)
+            if (nowPlace == 'cont-lef') {
+                $('.boatDom').css({
+                    'animation': 'toRig 0.5s forwards'
+                })
+                $('.person').css({
+                    'animation': 'toRigCont 0.5s forwards'
+                })
+                beforePlace = nowPlace
+                nowPlace = 'cont-rig'
+            } else {
+                $('.boatDom').css({
+                    'animation': 'toLef 0.5s forwards'
+                })
+                $('.person').css({
+                    'animation': 'toLefCont 0.5s forwards'
+                })
+                beforePlace = nowPlace
+                nowPlace = 'cont-lef'
+            }
+            setTimeout(function () {
+                $('.person').html('')
+                $('.active').removeClass('active')
+                for (var i = 0; i < boatArr.length; i++) {
+                    $('.' + beforePlace + ' .every-person').eq(boatArr[i]).css("visibility", "hidden")
+                    $('.' + nowPlace + ' .every-person').eq(boatArr[i]).css("visibility", "visible")
+                    $('.' + nowPlace + ' .every-person').eq(boatArr[i]).removeClass('hide')
+                }
+                boatArr = []
+                checkEnd()
+            }, 520)
+
+        })
+        // 人物点击
+        $('.every-person').click(function () {
+            //判断位置
+            if ($(this).parents().eq(0).attr('class') !== nowPlace) {
+                return
+            }
+            //已经选中返回
+            if ($(this).hasClass('active')) {
+                return
+            }
+            //已经坐满
+            if ($('.person').children().length >= 2) {
+                alert('船上最多坐两个人')
+                return;
+            }
+            var name = filterName($(this).index())
+            $('.person').append('<div class="every" key="' + $(this).index() + '">' + name + '</div>')
+            boatArr.push($(this).index())
+            $(this).addClass('active')
+            $(this).addClass('hide')
+            $('.person .every').unbind()
+            $('.person .every').click(boatClick)
+        })
+        // 船上角色点击
+        function boatClick() {
+            $(this).remove();
+            $('.' + nowPlace + ' .every-person').eq($(this).attr('key')).removeClass('active')
+            $('.' + nowPlace + ' .every-person').eq($(this).attr('key')).removeClass('hide')
+            var key = Number($(this).attr('key'))
+            var index = boatArr.indexOf(key);
+
+            boatArr.splice(index, 1)
+        }
+
+        function checkMove() {
+            var resultArr = []
+            var dom = $('.' + nowPlace + ' .every-person').not('.hide')
+            for (var i = 0; i < dom.length; i++) {
+                resultArr.push(dom.eq(i).index())
+            }
+            if (!(boatArr.indexOf(0) !== -1 || boatArr.indexOf(3) !== -1 || boatArr.indexOf(6) !== -1)) {
+                alert('只有妈妈、爸爸和警察能撑船！')
+                return true
+            }
+            if (resultArr.indexOf(7) !== -1 && resultArr.indexOf(6) == -1 && resultArr.length > 1) {
+                alert('土匪伤人！')
+                return true
+            }
+
+            if (resultArr.indexOf(0) !== -1 && boatArr.indexOf(3) !== -1) {
+                console.log(resultArr, boatArr)
+                if (resultArr.indexOf(4) !== -1 || resultArr.indexOf(5) !== -1) {
+                    alert('妈妈打儿子')
+                    return true
+                }
+                if (boatArr.indexOf(2) !== -1 || boatArr.indexOf(1) !== -1) {
+                    alert('爸爸打女儿')
+                    return true
+                }
+            }
+            if (resultArr.indexOf(3) !== -1 && boatArr.indexOf(0) !== -1) {
+                if (resultArr.indexOf(1) !== -1 || resultArr.indexOf(2) !== -1) {
+                    alert('爸爸打女儿')
+                    return true
+                }
+                if (boatArr.indexOf(4) !== -1 || boatArr.indexOf(5) !== -1) {
+                    alert('妈妈打儿子')
+                    return true
+                }
+            }
+            console.log(resultArr.indexOf(3), boatArr.indexOf(3), boatArr.indexOf(1) !== -1, boatArr.indexOf(2) !== -1)
+            // if(resultArr.indexOf(3) == -1 && boatArr.indexOf(3) == -1){
+            //     if(boatArr.indexOf(1) !== -1 || boatArr.indexOf(2) !== -1 ){
+            //         alert('爸爸打女儿')
+            //         return true
+            //     }
+            // }
+            // if(resultArr.indexOf(0) == -1 && boatArr.indexOf(0) == -1){
+            //     if(boatArr.indexOf(4) !== -1 ||boatArr.indexOf(5) !== -1 ){
+            //         alert('妈妈打儿子')
+            //         return true
+
+            //     }
+            // }
+            return false
+        }
+        // 根据index判断身份
+        function filterName(index) {
+            switch (index) {
+                case 0:
+                    return '妈'
+                case 1:
+                    return '女'
+
+                case 2:
+                    return '女'
+
+                case 3:
+                    return '爸'
+
+                case 4:
+                    return '儿'
+
+                case 5:
+                    return '儿'
+
+                case 6:
+                    return '警'
+
+                case 7:
+                    return '匪'
+            }
+
+        }
+        $('.refresh').click(function () {
+            location.reload();
+        })
+
+        function checkEnd() {
+            console.log($('.cont-rig .every-person.hide').length)
+            if ($('.cont-rig .every-person.hide').length == 0) {
+                alert('好姐姐，你真厉害!')
+                location.reload();
+            }
+        }
+    </script>
+</body>
+
+</html>
